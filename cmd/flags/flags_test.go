@@ -28,6 +28,9 @@ func TestParse_ValidArgs(t *testing.T) {
 	if cfg.Timeout != 5*time.Minute {
 		t.Errorf("Timeout = %v, want %v", cfg.Timeout, 5*time.Minute)
 	}
+	if cfg.ProxyURL != "https://proxy.golang.org" {
+		t.Errorf("ProxyURL = %q, want %q", cfg.ProxyURL, "https://proxy.golang.org")
+	}
 }
 
 func TestParse_AllFlags(t *testing.T) {
@@ -35,6 +38,7 @@ func TestParse_AllFlags(t *testing.T) {
 		"--direct-only",
 		"--timeout", "2m",
 		"--format", "json",
+		"--proxy", "https://goproxy.example.com",
 		"https://github.com/example/repo",
 	}, &bytes.Buffer{})
 	if err != nil {
@@ -48,6 +52,9 @@ func TestParse_AllFlags(t *testing.T) {
 	}
 	if cfg.Format != "json" {
 		t.Errorf("Format = %q, want %q", cfg.Format, "json")
+	}
+	if cfg.ProxyURL != "https://goproxy.example.com" {
+		t.Errorf("ProxyURL = %q, want %q", cfg.ProxyURL, "https://goproxy.example.com")
 	}
 }
 

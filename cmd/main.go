@@ -80,6 +80,7 @@ func run() error {
 	fmt.Fprintln(os.Stderr, "Checking for updates...")
 	updater := update.NewProxyUpdater().
 		WithHTTPClient(&http.Client{Timeout: 30 * time.Second}).
+		WithProxyURL(cfg.ProxyURL).
 		WithDirectOnly(cfg.DirectOnly).
 		Done()
 

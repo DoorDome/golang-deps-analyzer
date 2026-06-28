@@ -15,6 +15,7 @@ type Config struct {
 	DirectOnly bool
 	Timeout    time.Duration
 	Format     string
+	ProxyURL   string
 }
 
 func Parse(binaryName string, args []string, usageOut io.Writer) (*Config, error) {
@@ -29,6 +30,7 @@ func Parse(binaryName string, args []string, usageOut io.Writer) (*Config, error
 	fs.BoolVar(&cfg.DirectOnly, "direct-only", false, "skip indirect dependencies when checking for updates")
 	fs.DurationVar(&cfg.Timeout, "timeout", 5*time.Minute, "overall operation timeout")
 	fs.StringVarP(&cfg.Format, "format", "f", "text", "output format: text or json")
+	fs.StringVar(&cfg.ProxyURL, "proxy", "https://proxy.golang.org", "Go module proxy URL")
 
 	if err := fs.Parse(args); err != nil {
 		return nil, err
